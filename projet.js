@@ -42,24 +42,36 @@ let choix = parseInt(prompt("Votre choix : "));
  }
 
  switch(choix){
+   case 0 : 
+      console.log("dfghjkl");
+      break;
    case 1 :
       console.log("tableau de bord");
+      break ;
    case 2 : 
        console.log("liste des apprenants"); 
+       break ;
    case 3 :
        console.log("liste des apprenants");
+       break ;
    case 4 :
        console.log("liste des apprenants");
+       break ;
    case 5 :
        console.log("liste des apprenants");
+       break ;
    case 6 :
        console.log("liste des apprenants");
+       break ;
    case 7 :
        console.log("liste des apprenants");
+       break ;
    case 8 :
        console.log("liste des apprenants");
+       break ;
    case 9 :
        console.log("liste des apprenants");
+       break ;
    
 
 
@@ -68,7 +80,7 @@ let choix = parseInt(prompt("Votre choix : "));
  }
 
 
-
+//  function de normalisation
 
 function normaliserNom(nomComplet){
 nomComplet = nomComplet.toLowerCase();
@@ -87,7 +99,38 @@ return nomComplet
 
 }
 
-console.log(normaliserNom("nom  Complet"))
+// ajouter apprenants
+
+function ajouterApprenant(){
+  let id = parseInt(prompt("ID d'apprenant :  "));
+  while(isNaN(id)){
+  console.log("veiller entre un nombre !!!")
+    id = prompt("ID d'apprenant :  ");
+  }
+  let nom =prompt("le nom d'apprenant :  ");
+   while(!isNaN(nom)){
+  console.log("veiller entre un nom !!!")
+    nom = prompt("le nom d'apprenant :  ");
+  }
+
+  let ville =prompt("la ville d'apprenant :  ");
+   while(!isNaN(ville)){
+  console.log("veiller entre une ville !!!")
+    ville = prompt("la ville d'apprenant :  ");
+  }
+  let apprenant = {
+   id : id ,
+   nom : nom,
+   ville : ville
+  }
+   apprenants.push(apprenant)
+   
+}
+
+
+
+
+
 
 
 
