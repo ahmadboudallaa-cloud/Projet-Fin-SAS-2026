@@ -22,6 +22,8 @@ const apprenants = [
     ]
   }
 ];
+let choix = -1;
+while(choix !== 0 ){
 console.log("SAS PROGRESS CONSOLE");
 console.log("1. Afficher le tableau de bord");
 console.log("2. Afficher la liste des apprenants");
@@ -33,26 +35,27 @@ console.log("7. Filtrer les apprenants par niveau");
 console.log("8. Trier les apprenants par progression décroissante");
 console.log("9. Trier les apprenants par ordre alphabétique");
 console.log("0. Quitter");
-let choix = parseInt(prompt("Votre choix : "));
+choix = parseInt(prompt("Votre choix : "));
  while(isNaN(choix) || choix < 0 || choix  > 9 ){
     console.log("veiller entrer un nombre entre 0 et 9");
     choix = parseInt(prompt("Votre choix : "));
     
    
- }
+ 
+}
 
  switch(choix){
    case 0 : 
-      console.log("dfghjkl");
+      console.log("Au revoir")
       break;
    case 1 :
-      console.log("tableau de bord");
+       console.log("liste des apprenants");
       break ;
    case 2 : 
        console.log("liste des apprenants"); 
        break ;
    case 3 :
-       console.log("liste des apprenants");
+       ajouterApprenant();
        break ;
    case 4 :
        console.log("liste des apprenants");
@@ -78,11 +81,13 @@ let choix = parseInt(prompt("Votre choix : "));
 
 
  }
+}
 
 
 //  function de normalisation
 
 function normaliserNom(nomComplet){
+
 nomComplet = nomComplet.toLowerCase();
 nomComplet = nomComplet.split(" ");
 for(let i = 0 ; i < nomComplet.length ; i++){
@@ -91,6 +96,11 @@ for(let i = 0 ; i < nomComplet.length ; i++){
    nomComplet.splice(i , 1)
    i -= 1  
    }
+
+   let nom1 = nomComplet[i][0].toUpperCase();
+   let rest = nomComplet.slice(0 , 1);
+
+   nomComplet[i] = nom1 + rest 
  
 
 }
@@ -102,10 +112,13 @@ return nomComplet
 // ajouter apprenants
 
 function ajouterApprenant(){
+   console.log("Ajouter l'apprenant");
   let id = parseInt(prompt("ID d'apprenant :  "));
-  while(isNaN(id)){
-  console.log("veiller entre un nombre !!!")
+  for(let i = 0 ; i < apprenants.length ; i++){
+   while(isNaN(id) || apprenants[i].id == id){
+  console.log("veiller entre un nombre et un id nom utiliser !!")
     id = prompt("ID d'apprenant :  ");
+  }
   }
   let nom =prompt("le nom d'apprenant :  ");
    while(!isNaN(nom)){
@@ -113,19 +126,82 @@ function ajouterApprenant(){
     nom = prompt("le nom d'apprenant :  ");
   }
 
-  let ville =prompt("la ville d'apprenant :  ");
+  let ville = prompt("la ville d'apprenant :  ");
    while(!isNaN(ville)){
   console.log("veiller entre une ville !!!")
     ville = prompt("la ville d'apprenant :  ");
   }
+  nom = normaliserNom(nom);
+  ville = normaliserNom(ville);
+  console.log("l'apprenat a ete ajouter ")
   let apprenant = {
    id : id ,
-   nom : nom,
+   nomComplet : nom,
    ville : ville
   }
    apprenants.push(apprenant)
    
 }
+
+
+
+function enregistrerResultat(){
+   console.log("ajouter votre avancemment")
+let jour = parseInt(prompt("ajouter la journer : "))
+for(let i = 0 ; i < apprenants.resultats.length ; i++){
+
+   while(apprenants[i].resultats[i].jour == jour){
+     
+  console.log("cette journer et deja enregistrer modifier la  ")
+   
+    jour = parseInt(prompt("ajouter la journer : "))
+
+
+   }
+    
+
+    
+
+   }
+   
+
+let exercicesTermines = parseInt(prompt("ajouter le nombre des exercices : "))
+    while(isNaN(exercicesTermines) || exercicesTermines < 0 || exercicesTermines > 20 ){
+      console.log("ajouter un nombre entre 1 et 20");
+      exercicesTermines = parseInt(prompt("ajouter le nombre des exercices : "));
+    }
+
+    let totalExercices = 20 ;
+    let challengeTermine =  false;
+    if(exercicesTermines == 20){
+      challengeTermine = true ;
+    }
+   let result = {
+      jour: jour ,
+       exercicesTermines: exercicesTermines,
+        totalExercices: totalExercices,
+         challengeTermine: challengeTermine 
+
+         
+
+    }
+    apprenants[n].resultats.push(result)
+
+  
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
