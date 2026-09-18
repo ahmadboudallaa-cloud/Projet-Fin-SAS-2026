@@ -52,7 +52,7 @@ choix = parseInt(prompt("Votre choix : "));
        console.log("liste des apprenants");
       break ;
    case 2 : 
-       console.log("liste des apprenants"); 
+      afficherListeApprenants();
        break ;
    case 3 :
        ajouterApprenant();
@@ -157,14 +157,6 @@ function ajouterApprenant(){
   apprenants.push(apprenant)
     }
 
-   
-   
-
- 
-   
-
-
-
 
 function enregistrerResultat(){
    let index = indexId()
@@ -199,7 +191,7 @@ let exercicesTermines = parseInt(prompt("ajouter le nombre des exercices : "))
    
 
 
-   function rechercherApprenantNom(){
+function rechercherApprenantNom(){
    let cherche = prompt("entrer le nom d'apprenant : ");
      cherche  = normaliserNom(cherche);
 
@@ -246,7 +238,7 @@ return index
 }
 
 
-   function consulterApprenant(){
+function consulterApprenant(){
   let index = indexId()
   
 
@@ -274,6 +266,20 @@ if(apprenants[index].resultats[a].challengeTermine == true){
  console.log(apprenants[index].nomComplet + " : " + exercicesTermines + " / " + totalExercices +" exercices, progression : " + progression + " %  ,  " + jour + " journées renseignées, " + challengeTermine + " challenges terminés.")
 
    }
+
+function afficherListeApprenants(){
+console.log("********** listes des apprenants **********");
+   for(let i = 0 ; i < apprenants.length ; i++ ){
+      let id = apprenants[i].id;
+      let nom = apprenants[i].nomComplet;
+      let ville = apprenants[i].ville;
+
+      
+      console.log("ID : " + id + " | Nom Complet : " + nom + " | ville : "+ ville )
+   }
+}
+
+
    
    
 
