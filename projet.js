@@ -115,9 +115,16 @@ function ajouterApprenant(){
    console.log("Ajouter l'apprenant");
    let id = parseInt(prompt("ID d'apprenant :  "));
    let idTrouver = false
-   while(isNaN(id) || idTrouver == false){
+    for(let i = 0 ; i < apprenants.length ; i++){
+    if(id == apprenants[i].id){
+      idTrouver = true;
+      break;
+  }
+}
+   while(isNaN(id) || idTrouver == true){
   console.log("veiller entre un nombre et un id nom utiliser !!")
-    id = parseInt(prompt("ID d'apprenant :  "));
+    id = parseInt(prompt("ID d'apprenant : "));
+    idTrouver = false;
     for(let i = 0 ; i < apprenants.length ; i++){
     if(id == apprenants[i].id){
       idTrouver = true;
