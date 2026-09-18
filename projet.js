@@ -64,7 +64,7 @@ choix = parseInt(prompt("Votre choix : "));
        console.log("liste des apprenants");
        break ;
    case 6 :
-       console.log("liste des apprenants");
+       rechercherApprenantNom();
        break ;
    case 7 :
        console.log("liste des apprenants");
@@ -98,7 +98,7 @@ for(let i = 0 ; i < nomComplet.length ; i++){
    }
 
    let nom1 = nomComplet[i][0].toUpperCase();
-   let rest = nomComplet.slice(0 , 1);
+   let rest = nomComplet[i].slice(1);
 
    nomComplet[i] = nom1 + rest 
  
@@ -137,7 +137,8 @@ function ajouterApprenant(){
   let apprenant = {
    id : id ,
    nomComplet : nom,
-   ville : ville
+   ville : ville,
+   resultats: []
   }
    apprenants.push(apprenant)
    
@@ -189,6 +190,36 @@ let exercicesTermines = parseInt(prompt("ajouter le nombre des exercices : "))
 
   
    }
+
+
+   function rechercherApprenantNom(){
+   let cherche = prompt("entrer le nom d'apprenant : ");
+     cherche  = normaliserNom(cherche);
+
+     let apprenantChercher = false;
+
+
+  while(apprenantChercher == false ){
+    let cherche = prompt("entrer un nom exist : ");
+     cherche  = normaliserNom(cherche);
+     for(let i = 0 ; i <apprenants.length ; i++){
+      
+if(apprenants[i].nomComplet.includes(cherche) ){
+  apprenantChercher = apprenants[i].nomComplet.includes(cherche)
+  console.log(apprenants[i].nomComplet);
+
+}  
+}
+  }
+  
+
+   }
+   
+   
+
+
+   
+  
 
 
 
