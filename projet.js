@@ -58,10 +58,10 @@ choix = parseInt(prompt("Votre choix : "));
        ajouterApprenant();
        break ;
    case 4 :
-       console.log("liste des apprenants");
+       consulterApprenant()
        break ;
    case 5 :
-       console.log("liste des apprenants");
+       enregistrerResultat()
        break ;
    case 6 :
        rechercherApprenantNom();
@@ -113,12 +113,19 @@ return nomComplet
 
 function ajouterApprenant(){
    console.log("Ajouter l'apprenant");
-  let id = parseInt(prompt("ID d'apprenant :  "));
-  for(let i = 0 ; i < apprenants.length ; i++){
-   while(isNaN(id) || apprenants[i].id == id){
+   let id = parseInt(prompt("ID d'apprenant :  "));
+   let idTrouver = false
+   while(isNaN(id) || idTrouver == false){
   console.log("veiller entre un nombre et un id nom utiliser !!")
-    id = prompt("ID d'apprenant :  ");
+    id = parseInt(prompt("ID d'apprenant :  "));
+    for(let i = 0 ; i < apprenants.length ; i++){
+    if(id == apprenants[i].id){
+      idTrouver = true;
+      break;
   }
+}
+ 
+  
   }
   let nom =prompt("le nom d'apprenant :  ");
    while(!isNaN(nom)){
@@ -140,39 +147,29 @@ function ajouterApprenant(){
    ville : ville,
    resultats: []
   }
-   apprenants.push(apprenant)
+  apprenants.push(apprenant)
+    }
+
    
-}
+   
+
+ 
+   
+
 
 
 
 function enregistrerResultat(){
-   console.log("ajouter votre avancemment")
-let jour = parseInt(prompt("ajouter la journer : "))
-for(let i = 0 ; i < apprenants.resultats.length ; i++){
-
-   while(apprenants[i].resultats[i].jour == jour){
-     
-  console.log("cette journer et deja enregistrer modifier la  ")
-   
-    jour = parseInt(prompt("ajouter la journer : "))
-
-
-   }
-    
-
-    
-
-   }
-   
-
+   let index = indexId()
+   console.log("ajouter votre avancemment :");
+let jour = parseInt(prompt("ajouter la journer : "));
 let exercicesTermines = parseInt(prompt("ajouter le nombre des exercices : "))
     while(isNaN(exercicesTermines) || exercicesTermines < 0 || exercicesTermines > 20 ){
       console.log("ajouter un nombre entre 1 et 20");
       exercicesTermines = parseInt(prompt("ajouter le nombre des exercices : "));
     }
 
-    let totalExercices = 20 ;
+    let totalExercices = 20  ;
     let challengeTermine =  false;
     if(exercicesTermines == 20){
       challengeTermine = true ;
@@ -183,13 +180,16 @@ let exercicesTermines = parseInt(prompt("ajouter le nombre des exercices : "))
         totalExercices: totalExercices,
          challengeTermine: challengeTermine 
 
-         
-
     }
-    apprenants[n].resultats.push(result)
+    
+    
 
-  
-   }
+   
+        apprenants[index].resultats.push(result)
+   
+
+}
+   
 
 
    function rechercherApprenantNom(){
@@ -216,6 +216,65 @@ if(apprenants[i].nomComplet.includes(cherche) ){
    }
    
    
+
+function indexId(){
+   
+let index = 0 ;
+  let idTrouver = false
+   while(idTrouver == false){
+  let cherche = parseInt(prompt("entrer un id d'apprenant exist : "));
+ 
+for(let i = 0 ; i < apprenants.length ; i++){
+   if(apprenants[i].id == cherche){
+    idTrouver = true
+    index = i
+    break ;
+   }
+
+  }
+   }
+  
+  
+return index
+}
+
+
+   function consulterApprenant(){
+  let index = indexId()
+  
+
+  console.log("Apprenant trouvé : " + apprenants[index].nomComplet)
+  let jour = apprenants[index].resultats.length 
+  let challengeTermine = 0 
+let exercicesTermines = 0;
+for(let a = 0 ; a < apprenants[index].resultats.length ; a++){
+   exercicesTermines += apprenants[index].resultats[a].exercicesTermines;
+
+
+
+if(apprenants[index].resultats[a].challengeTermine == true){
+  challengeTermine ++
+}
+
+
+
+}
+
+
+ let totalExercices = 20 * jour;
+ let progression = (exercicesTermines / totalExercices) * 100
+
+ console.log(apprenants[index].nomComplet + " : " + exercicesTermines + " / " + totalExercices +" exercices, progression : " + progression + " %  ,  " + jour + " journées renseignées, " + challengeTermine + " challenges terminés.")
+
+   }
+   
+   
+
+
+   
+  
+
+
 
 
    
