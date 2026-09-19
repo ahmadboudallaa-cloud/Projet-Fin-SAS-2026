@@ -58,7 +58,7 @@ choix = parseInt(prompt("Votre choix : "));
        ajouterApprenant();
        break ;
    case 4 :
-       console.log(consulterApprenant())
+       consulterApprenant()
        break ;
    case 5 :
        enregistrerResultat()
@@ -70,10 +70,10 @@ choix = parseInt(prompt("Votre choix : "));
        filtrerParNiveau();
        break ;
    case 8 :
-       console.log("liste des apprenants");
+       trierParProgression()
        break ;
    case 9 :
-       console.log("liste des apprenants");
+       trierParOrdreAlpha()
        break ;
    
 
@@ -174,7 +174,17 @@ let exercicesTermines = parseInt(prompt("ajouter le nombre des exercices : "))
     }
 
     let totalExercices = 20  ;
-    let challengeTermine = prompt("challenge terminer : ")
+    let challenge = prompt("challenge terminer (oui /non) : ")
+    let challengeFil = challenge.toLowerCase();
+    let challengeTermine = false
+    while(challengeFil != "oui" && challengeFil != "non"){
+       challenge = prompt("challenge terminer (oui /non) : ")
+       challengeFil = challenge.toLowerCase();
+    }
+    if(challengeFil == "oui"){
+      challengeTermine = true
+    }
+
    let result = {
       jour: jour ,
        exercicesTermines: exercicesTermines,
@@ -196,11 +206,13 @@ let exercicesTermines = parseInt(prompt("ajouter le nombre des exercices : "))
     if(trouve == false){
           apprenants[index].resultats.push(result)
 
+    }else{
+      apprenants[index].resultats.push(result)  
     }
 
 
 
-   apprenants[index].resultats.push(result)     
+     
    
 
 }
@@ -278,12 +290,6 @@ function afficherTableauDeBord(){
 
 }
 
-function calculerProgression(totalTermine , totalPropose){
-let progression = (totalTermine / totalPropose) * 100
-return progression
-
-}
-
 function calculerProgressionConsulter(index ){
 
   console.log("Apprenant trouvé : " + apprenants[index].nomComplet)
@@ -340,22 +346,22 @@ function filtrerParNiveau(){
   let niveauFil = niveau.toLowerCase()
 
 while(niveauFil != "solide" && niveauFil != "en progression" && niveauFil != "a renforcer" ){
-   niveau = prompt("entrer un niveau existe :")
-   niveauFil = normaliserNom(niveau) 
+   niveau = prompt("entrer un niveau existe (Solide , En progression ou A renforcer) :")
+   niveauFil = niveau.toLowerCase()
 }
 for(let i = 0 ; i < apprenants.length ; i++){
 
 let progression = calculerProgression(i);
 
-
+let nom = apprenants[i].nomComplet
 
 if(progression >= 80 && niveauFil == "solide"){
-console.log(apprenants[i].nomComplet)
+console.log("Nom d'apprenant : "+ nom + " | Progression : "+ progression + "%" + " | Niveau : "+niveauFil)
 
 }else if(progression >= 50 && progression <= 79 && niveauFil == "en progression"){
-   console.log(apprenants[i].nomComplet)
+console.log("Nom d'apprenant : "+ nom + " | Progression : "+ progression + "%" + " | Niveau : "+niveauFil)
 }else if(progression < 50 && niveauFil == "a renforcer"){
-      console.log(apprenants[i].nomComplet)
+console.log("Nom d'apprenant : "+ nom + " | Progression : "+ progression + "%" + " | Niveau : "+niveauFil)
 }
 
 
@@ -365,6 +371,42 @@ console.log(apprenants[i].nomComplet)
 
 
 }
+
+
+function trierParOrdreAlpha(){
+console.log("-----apprenant trier par ordre alphabetique----- ")
+
+
+apprenants.sort((a , b) => {
+
+
+return a.nomComplet.localeCompare(b.nomComplet)
+
+})
+for(let i = 0 ; i < apprenants.length ; i++){
+  console.log(apprenants[i].nomComplet)
+}
+
+
+}
+
+function trierParProgression(){
+  console.log("------apprenant trier par ordre decroissant------")
+
+for(let i = 0 ; i < apprenants.length ; i++){
+let progression = calculerProgression(i)
+if(progression[i] < progression[i + 1] ){
+  return progression[i]
+}
+let nom = apprenants[i].nomComplet
+
+console.log("Nom d'apprenant : "+ nom + " | Progression : "+ progression + "%")
+
+}
+
+}
+
+
 
 
 
