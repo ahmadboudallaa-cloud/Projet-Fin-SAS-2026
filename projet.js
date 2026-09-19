@@ -58,7 +58,7 @@ choix = parseInt(prompt("Votre choix : "));
        ajouterApprenant();
        break ;
    case 4 :
-       consulterApprenant()
+       console.log(consulterApprenant())
        break ;
    case 5 :
        enregistrerResultat()
@@ -67,7 +67,7 @@ choix = parseInt(prompt("Votre choix : "));
        rechercherApprenantNom();
        break ;
    case 7 :
-       console.log("liste des apprenants");
+       filtrerParNiveau();
        break ;
    case 8 :
        console.log("liste des apprenants");
@@ -180,12 +180,22 @@ let exercicesTermines = parseInt(prompt("ajouter le nombre des exercices : "))
          challengeTermine: challengeTermine 
 
     }
-    
-    
+    let trouve = false;
+    for(let j = 0 ; j < apprenants[index].resultats.length ; j++){
+      if(apprenants[index].resultats[j].jour == jour ){
+         apprenants[index].resultats[j] = result
+         trouve = true
+      break;
+      }
 
-   
-        apprenants[index].resultats.push(result)
-   
+
+    }
+    
+    if(trouve == false){
+          apprenants[index].resultats.push(result)
+
+    }
+
 
 }
    
@@ -240,12 +250,28 @@ return index
 
 function consulterApprenant(){
   let index = indexId()
-  
+  let calcule = calculerProgressionConsulter(index)
+  return calcule
+   }
+
+function afficherListeApprenants(){
+console.log("********** listes des apprenants **********");
+   for(let i = 0 ; i < apprenants.length ; i++ ){
+      let id = apprenants[i].id;
+      let nom = apprenants[i].nomComplet;
+      let ville = apprenants[i].ville;
+
+      
+      console.log("ID : " + id + " | Nom Complet : " + nom + " | ville : "+ ville )
+   }
+}
+
+function calculerProgressionConsulter(index ){
 
   console.log("Apprenant trouvé : " + apprenants[index].nomComplet)
-  let jour = apprenants[index].resultats.length 
-  let challengeTermine = 0 
-let exercicesTermines = 0;
+   let jour = apprenants[index].resultats.length 
+   let challengeTermine = 0 
+ let exercicesTermines = 0;
 for(let a = 0 ; a < apprenants[index].resultats.length ; a++){
    exercicesTermines += apprenants[index].resultats[a].exercicesTermines;
 
@@ -260,24 +286,72 @@ if(apprenants[index].resultats[a].challengeTermine == true){
 }
 
 
- let totalExercices = 20 * jour;
- let progression = (exercicesTermines / totalExercices) * 100
+  let totalExercices = 20 * jour;
+  let progression = (exercicesTermines / totalExercices) * 100
 
  console.log(apprenants[index].nomComplet + " : " + exercicesTermines + " / " + totalExercices +" exercices, progression : " + progression + " %  ,  " + jour + " journées renseignées, " + challengeTermine + " challenges terminés.")
-
-   }
-
-function afficherListeApprenants(){
-console.log("********** listes des apprenants **********");
-   for(let i = 0 ; i < apprenants.length ; i++ ){
-      let id = apprenants[i].id;
-      let nom = apprenants[i].nomComplet;
-      let ville = apprenants[i].ville;
-
-      
-      console.log("ID : " + id + " | Nom Complet : " + nom + " | ville : "+ ville )
-   }
+  
 }
+function calculerProgression(index ){
+
+   let jour = apprenants[index].resultats.length 
+   let challengeTermine = 0 
+ let exercicesTermines = 0;
+for(let a = 0 ; a < apprenants[index].resultats.length ; a++){
+   exercicesTermines += apprenants[index].resultats[a].exercicesTermines;
+
+
+
+if(apprenants[index].resultats[a].challengeTermine == true){
+  challengeTermine ++
+}
+
+
+
+}
+
+
+  let totalExercices = 20 * jour;
+  let progression = (exercicesTermines / totalExercices) * 100
+
+return progression;  
+}
+
+function filtrerParNiveau(){
+  let niveau = prompt("entrer un niveau :  "); 
+  let niveauFil = niveau.toLowerCase()
+
+while(niveauFil != "solide" && niveauFil != "en progression" && niveauFil != "a renforcer" ){
+   niveau = prompt("entrer un niveau existe :")
+   niveauFil = normaliserNom(niveau) 
+}
+for(let i = 0 ; i < apprenants.length ; i++){
+
+let progression = calculerProgression(i);
+
+
+
+if(progression >= 80 && niveauFil == "solide"){
+console.log(apprenants[i].nomComplet)
+
+}else if(progression >= 50 && progression <= 79 && niveauFil == "en progression"){
+   console.log(apprenants[i].nomComplet)
+}else if(progression < 50 && niveauFil == "a renforcer"){
+      console.log(apprenants[i].nomComplet)
+}
+
+
+
+}
+
+
+
+}
+
+
+
+
+
 
 
    
