@@ -162,6 +162,11 @@ function enregistrerResultat(){
    let index = indexId()
    console.log("ajouter votre avancemment :");
 let jour = parseInt(prompt("ajouter la journer : "));
+
+while(isNaN(jour) || jour < 1 || jour > 7 ){
+  jour = parseInt(prompt("ajouter une journer entre 1 et 7 : "));
+}
+
 let exercicesTermines = parseInt(prompt("ajouter le nombre des exercices : "))
     while(isNaN(exercicesTermines) || exercicesTermines < 0 || exercicesTermines > 20 ){
       console.log("ajouter un nombre entre 1 et 20");
@@ -169,10 +174,7 @@ let exercicesTermines = parseInt(prompt("ajouter le nombre des exercices : "))
     }
 
     let totalExercices = 20  ;
-    let challengeTermine =  false;
-    if(exercicesTermines == 20){
-      challengeTermine = true ;
-    }
+    let challengeTermine = prompt("challenge terminer : ")
    let result = {
       jour: jour ,
        exercicesTermines: exercicesTermines,
@@ -191,11 +193,17 @@ let exercicesTermines = parseInt(prompt("ajouter le nombre des exercices : "))
 
     }
     
+<<<<<<< HEAD
     if(trouve == false){
           apprenants[index].resultats.push(result)
 
     }
 
+=======
+
+   apprenants[index].resultats.push(result)     
+   
+>>>>>>> b0bb0e64048e52818a42e8da14e4bde3af866ccd
 
 }
    
@@ -250,8 +258,36 @@ return index
 
 function consulterApprenant(){
   let index = indexId()
+<<<<<<< HEAD
   let calcule = calculerProgressionConsulter(index)
   return calcule
+=======
+  
+
+  console.log("Apprenant trouvé : " + apprenants[index].nomComplet)
+  let jour = apprenants[index].resultats.length 
+  let challengeTermine = 0 
+let exercicesTermines = 0;
+for(let a = 0 ; a < apprenants[index].resultats.length ; a++){
+   exercicesTermines += apprenants[index].resultats[a].exercicesTermines;
+
+
+
+if(apprenants[index].resultats[a].challengeTermine == true){
+  challengeTermine ++
+}
+
+
+
+}
+
+
+ let totalExercices = 20 * jour;
+ let progression = calculerProgression(exercicesTermines , totalExercices)
+
+ console.log(apprenants[index].nomComplet + " : " + exercicesTermines + " / " + totalExercices +" exercices, progression : " + progression + " %  ,  " + jour + " journées renseignées, " + challengeTermine + " challenges terminés.")
+
+>>>>>>> b0bb0e64048e52818a42e8da14e4bde3af866ccd
    }
 
 function afficherListeApprenants(){
@@ -264,6 +300,15 @@ console.log("********** listes des apprenants **********");
       
       console.log("ID : " + id + " | Nom Complet : " + nom + " | ville : "+ ville )
    }
+}
+function afficherTableauDeBord(){
+
+}
+
+function calculerProgression(totalTermine , totalPropose){
+let progression = (totalTermine / totalPropose) * 100
+return progression
+
 }
 
 function calculerProgressionConsulter(index ){
