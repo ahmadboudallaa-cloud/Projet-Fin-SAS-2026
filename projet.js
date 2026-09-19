@@ -220,27 +220,30 @@ let exercicesTermines = parseInt(prompt("ajouter le nombre des exercices : "))
 
 
 function rechercherApprenantNom(){
-   let cherche = prompt("entrer le nom d'apprenant : ");
-     cherche  = normaliserNom(cherche);
-
-     let apprenantChercher = false;
-
-
-  while(apprenantChercher == false ){
+   
+      let apprenantChercher = false;
+     while(apprenantChercher == false ){
     let cherche = prompt("entrer un nom exist : ");
      cherche  = normaliserNom(cherche);
+
+
+  
      for(let i = 0 ; i <apprenants.length ; i++){
       
 if(apprenants[i].nomComplet.includes(cherche) ){
-  apprenantChercher = apprenants[i].nomComplet.includes(cherche)
+  apprenantChercher = true
   console.log(apprenants[i].nomComplet);
 
-}  
+} 
 }
+
+
   }
+}
+  
   
 
-   }
+   
    
    
 
