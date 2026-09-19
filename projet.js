@@ -49,7 +49,7 @@ choix = parseInt(prompt("Votre choix : "));
       console.log("Au revoir")
       break;
    case 1 :
-       console.log("liste des apprenants");
+     afficherTableauDeBord()
       break ;
    case 2 : 
       afficherListeApprenants();
@@ -287,8 +287,84 @@ console.log("********** listes des apprenants **********");
    }
 }
 function afficherTableauDeBord(){
+let nombreApprenant = apprenants.length
+
+
+
+
+let progTolal = 0
+let solide = 0;
+let enProgression = 0;
+let arenforcer = 0;
+for(let i = 0 ; i < apprenants.length ; i++){
+
+let progression = calculerProgression(i);
+
+progTolal += progression
+
+
+
+
+if(progression >= 80){
+solide ++
+}else if(progression >= 50 && progression <= 79 ){
+enProgression ++
+}else if(progression < 50 ){
+arenforcer ++
+}
+
+
+
 
 }
+
+
+
+let progMoyenne = progTolal / apprenants.length
+
+console.log("Total d'apprenant : "+ nombreApprenant + " | Progression Moyenne : "+ progMoyenne +"%")
+console.log("Nombre de profils Solide : " + solide)
+console.log("Nombre de profils En Progression : " + enProgression)
+console.log("Nombre de profils Arenforcer : " + arenforcer)
+console.log("----------- apprenant -----------")
+for(let i = 0 ; i < apprenants.length ; i++){
+  let tab = [1 , 2 , 3 , 4 , 5 , 6 , 7 ];
+  let challengeManque = 0 ;
+
+for(let j = 0 ; j < apprenants[i].resultats.length ; j++){
+
+ for(let a = 0 ; a < tab.length ; a++){
+  if(apprenants[i].resultats[j].jour == tab[a]  ){
+
+  tab.splice(a , 1)
+  
+  }
+ }
+
+ if(apprenants[i].resultats[j].challengeTermine == false){
+
+  challengeManque ++
+ }
+
+}
+
+
+
+  let tab2 = tab.join()
+let progression = calculerProgression(i)
+if(progression[i] < progression[i + 1] ){
+  return progression[i]
+}
+let nom = apprenants[i].nomComplet
+
+console.log("Nom d'apprenant : "+ nom + " | Progression : "+ progression + "%" + " | jour rester : "+ tab2 + " | "+ challengeManque + "  challenges manquants")
+
+}
+
+}
+
+
+
 
 function calculerProgressionConsulter(index ){
 
@@ -391,8 +467,6 @@ for(let i = 0 ; i < apprenants.length ; i++){
 }
 
 function trierParProgression(){
-  console.log("------apprenant trier par ordre decroissant------")
-
 for(let i = 0 ; i < apprenants.length ; i++){
 let progression = calculerProgression(i)
 if(progression[i] < progression[i + 1] ){
@@ -405,45 +479,3 @@ console.log("Nom d'apprenant : "+ nom + " | Progression : "+ progression + "%")
 }
 
 }
-
-
-
-
-
-
-
-
-
-   
-   
-
-
-   
-  
-
-
-
-
-   
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
