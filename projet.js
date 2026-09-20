@@ -459,7 +459,7 @@ while(niveauFil != "solide" && niveauFil != "en progression" && niveauFil != "a 
 }
 for(let i = 0 ; i < apprenants.length ; i++){
 
-let progression = calculerProgression(i);
+let progression = calculerProgression(apprenants[i]);
 
 let nom = apprenants[i].nomComplet
 
@@ -470,6 +470,9 @@ console.log("Nom d'apprenant : "+ nom + " | Progression : "+ progression + "%" +
 console.log("Nom d'apprenant : "+ nom + " | Progression : "+ progression + "%" + " | Niveau : "+niveauFil)
 }else if(progression < 50 && niveauFil == "a renforcer"){
 console.log("Nom d'apprenant : "+ nom + " | Progression : "+ progression + "%" + " | Niveau : "+niveauFil)
+}else{
+   console.log("Il n'y a pas d'apprenants avec se niveau")
+   break ;
 }
 
 
