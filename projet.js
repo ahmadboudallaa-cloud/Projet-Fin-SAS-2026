@@ -173,7 +173,15 @@ let exercicesTermines = parseInt(prompt("ajouter le nombre des exercices : "))
       exercicesTermines = parseInt(prompt("ajouter le nombre des exercices : "));
     }
 
-    let totalExercices = 20  ;
+    let totalExercices = parseInt(prompt("ajouter le total des exercices : "))
+    while(isNaN(totalExercices) || totalExercices < 1 || totalExercices > 20 ){
+      console.log("ajouter un nombre entre 1 et 20");
+      totalExercices = parseInt(prompt("ajouter le total des exercices : "));
+    }
+
+
+
+    
     let challenge = prompt("challenge terminer (oui /non) : ")
     let challengeFil = challenge.toLowerCase();
     let challengeTermine = false
@@ -406,10 +414,14 @@ function calculerProgressionConsulter(index ){
 
   console.log("Apprenant trouvé : " + apprenants[index].nomComplet)
    let jour = apprenants[index].resultats.length 
+   
    let challengeTermine = 0 
  let exercicesTermines = 0;
+ let totalExercices = 0
 for(let a = 0 ; a < apprenants[index].resultats.length ; a++){
    exercicesTermines += apprenants[index].resultats[a].exercicesTermines;
+
+  totalExercices += apprenants[index].resultats[a].totalExercices 
 
 
 
@@ -422,7 +434,7 @@ if(apprenants[index].resultats[a].challengeTermine == true){
 }
 
 
-  let totalExercices = 20 * jour;
+
   let progression = (exercicesTermines / totalExercices) * 100
 
  console.log(apprenants[index].nomComplet + " : " + exercicesTermines + " / " + totalExercices +" exercices, progression : " + progression + " %  ,  " + jour + " journées renseignées, " + challengeTermine + " challenges terminés.")
@@ -444,6 +456,9 @@ for(let a = 0 ; a < apprenant.resultats.length ; a++){
 
 
   let totalExercices = 20 * jour;
+  if(totalExercices == 0){
+   return 0
+  }
   let progression = (exercicesTermines / totalExercices) * 100
 
 return progression;  
@@ -470,9 +485,6 @@ console.log("Nom d'apprenant : "+ nom + " | Progression : "+ progression + "%" +
 console.log("Nom d'apprenant : "+ nom + " | Progression : "+ progression + "%" + " | Niveau : "+niveauFil)
 }else if(progression < 50 && niveauFil == "a renforcer"){
 console.log("Nom d'apprenant : "+ nom + " | Progression : "+ progression + "%" + " | Niveau : "+niveauFil)
-}else{
-   console.log("Il n'y a pas d'apprenants avec se niveau")
-   break ;
 }
 
 
