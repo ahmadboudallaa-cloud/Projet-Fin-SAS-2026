@@ -285,80 +285,119 @@ console.log("********** listes des apprenants **********");
       console.log("ID : " + id + " | Nom Complet : " + nom + " | ville : "+ ville )
    }
 }
+
 function afficherTableauDeBord(){
-let nombreApprenant = apprenants.length
-let progTolal = 0
-let solide = 0;
-let enProgression = 0;
-let arenforcer = 0;
-for(let i = 0 ; i < apprenants.length ; i++){
 
-let progression = calculerProgression(i);
+    let nombreApprenant = apprenants.length;
+    let progTotal = 0;
 
-progTolal += progression
+    let solide = 0;
+    let enProgression = 0;
+    let aRenforcer = 0;
 
 
+    apprenants.sort(function(a, b){
+
+        let progressionA = calculerProgression(a);
+        let progressionB = calculerProgression(b);
+
+        return progressionB - progressionA;
+
+    });
 
 
-if(progression >= 80){
-solide ++
-}else if(progression >= 50 && progression <= 79 ){
-enProgression ++
-}else if(progression < 50 ){
-arenforcer ++
+    console.log("----------- APPRENANTS -----------");
+
+    for(let i = 0; i < apprenants.length; i++){
+
+        let tab = [1, 2, 3, 4, 5, 6, 7];
+        let tabChallenge = [1, 2, 3, 4, 5, 6, 7];
+
+
+        for(let j = 0; j < apprenants[i].resultats.length; j++){
+
+            for(let a = 0; a < tab.length; a++){
+
+                if(apprenants[i].resultats[j].jour == tab[a]){
+
+                    tab.splice(a, 1);
+                    break;
+
+                }
+
+            }
+
+
+            for(let v = 0; v < tabChallenge.length; v++){
+
+                if(
+                    apprenants[i].resultats[j].challengeTermine == true &&
+                    apprenants[i].resultats[j].jour == tabChallenge[v]
+                ){
+
+                    tabChallenge.splice(v, 1);
+                    break;
+
+                }
+
+            }
+
+        }
+
+
+
+        let progression = calculerProgression(apprenants[i]);
+
+
+        progTotal += progression;
+
+
+        if(progression >= 80){
+
+            solide++;
+
+        }else if(progression >= 50){
+
+            enProgression++;
+
+        }else{
+
+            aRenforcer++;
+
+        }
+
+
+        let nom = apprenants[i].nomComplet;
+
+        let joursManquants = tab.join();
+
+        let challengesManquants = tabChallenge.join();
+
+        console.log(
+            "Nom d'apprenant : " + nom +" | Progression : " + progression + "%" +" | Jours restants : " + joursManquants +" | Challenges manquants : " + challengesManquants
+        );
+
+    }
+
+
+    let progMoyenne = progTotal / nombreApprenant;
+
+
+    console.log("----------------------------------");
+
+    console.log(
+        "Total d'apprenant : " + nombreApprenant +
+        " | Progression moyenne : " + progMoyenne + "%"
+    );
+
+    console.log("Nombre de profils Solide : " + solide);
+
+    console.log("Nombre de profils En Progression : " + enProgression);
+
+    console.log("Nombre de profils A renforcer : " + aRenforcer);
+
 }
 
-
-
-
-}
-
-
-
-let progMoyenne = progTolal / apprenants.length
-
-console.log("Total d'apprenant : "+ nombreApprenant + " | Progression Moyenne : "+ progMoyenne +"%")
-console.log("Nombre de profils Solide : " + solide)
-console.log("Nombre de profils En Progression : " + enProgression)
-console.log("Nombre de profils Arenforcer : " + arenforcer)
-console.log("----------- apprenant -----------")
-for(let i = 0 ; i < apprenants.length ; i++){
-  let tab = [1 , 2 , 3 , 4 , 5 , 6 , 7 ];
-  let tabChallenge = [1 , 2 , 3 , 4 , 5 , 6 , 7 ];
-  
-
-for(let j = 0 ; j < apprenants[i].resultats.length ; j++){
-
- for(let a = 0 ; a < tab.length ; a++){
-  if(apprenants[i].resultats[j].jour == tab[a]  ){
-
-  tab.splice(a , 1)
-  
-  }
- }
-
- for(let v = 0 ; v < tabChallenge.length ; v++){
- if(apprenants[i].resultats[j].challengeTermine == true && apprenants[i].resultats[j].jour == tabChallenge[v] ){
-   tabChallenge.splice(v , 1)
- }
-}
-}
-
-
-
-  let tab2 = tab.join()
-  let tabChallenge2 = tabChallenge.join()
-let progression = calculerProgression(i)
-if(progression[i] < progression[i + 1] ){
-  return progression[i]
-}
-let nom = apprenants[i].nomComplet
-
-console.log("Nom d'apprenant : "+ nom + " | Progression : "+ progression + "%" + " | jour rester : "+ tab2 + " | challenges manquants : "+ tabChallenge2)
-
-}
-
-}
 
 
 
@@ -389,20 +428,16 @@ if(apprenants[index].resultats[a].challengeTermine == true){
  console.log(apprenants[index].nomComplet + " : " + exercicesTermines + " / " + totalExercices +" exercices, progression : " + progression + " %  ,  " + jour + " journées renseignées, " + challengeTermine + " challenges terminés.")
   
 }
-function calculerProgression(index ){
+function calculerProgression(apprenant ){
 
-   let jour = apprenants[index].resultats.length 
-   let challengeTermine = 0 
+   let jour = apprenant.resultats.length 
+   if(jour == 0){
+        return 0;
+    }
+  
  let exercicesTermines = 0;
-for(let a = 0 ; a < apprenants[index].resultats.length ; a++){
-   exercicesTermines += apprenants[index].resultats[a].exercicesTermines;
-
-
-
-if(apprenants[index].resultats[a].challengeTermine == true){
-  challengeTermine ++
-}
-
+for(let a = 0 ; a < apprenant.resultats.length ; a++){
+   exercicesTermines += apprenant.resultats[a].exercicesTermines;
 
 
 }
@@ -464,15 +499,25 @@ for(let i = 0 ; i < apprenants.length ; i++){
 }
 
 function trierParProgression(){
-for(let i = 0 ; i < apprenants.length ; i++){
-let progression = calculerProgression(i)
-if(progression[i] < progression[i + 1] ){
-  return progression[i]
-}
-let nom = apprenants[i].nomComplet
+ apprenants.sort(function(a , b){
 
-console.log("Nom d'apprenant : "+ nom + " | Progression : "+ progression + "%")
+let progressionA = calculerProgression(a);
+let progressionB = calculerProgression(b)
+return progressionB - progressionA;
+ 
+ })
+ for(let i = 0; i < apprenants.length; i++){
+
+    let progression = calculerProgression(apprenants[i]);
+
+    let nom = apprenants[i].nomComplet;
+
+    console.log("Nom d'apprenant : " + nom + " | Progression : " + progression + "%");
+}
+
+
+
 
 }
 
-}
+
