@@ -174,8 +174,8 @@ let exercicesTermines = parseInt(prompt("ajouter le nombre des exercices : "))
     }
 
     let totalExercices = parseInt(prompt("ajouter le total des exercices : "))
-    while(isNaN(totalExercices) || totalExercices < 1 || totalExercices > 20 ){
-      console.log("ajouter un nombre entre 1 et 20");
+    while(isNaN(totalExercices) || totalExercices < 1 || totalExercices > 20 || totalExercices < exercicesTermines){
+      console.log("ajouter un nombre entre 1 et 20 et supperieur a exercices terminer!!");
       totalExercices = parseInt(prompt("ajouter le total des exercices : "));
     }
 
